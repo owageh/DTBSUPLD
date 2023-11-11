@@ -10,3 +10,8 @@ def CalcObligorRating(rating):
     scoreList = [ratingDF[ratingDF.iloc[:,i] == rating[i]].index[0] if rating[i] in ratingDF.iloc[:,i].values else -1 for i in range(len(rating))]
     obligorRating = ratingDF['S&P'].iloc[max(scoreList)]
     return obligorRating
+
+
+reportEnd = df[df.isna().all(axis=1)].index
+
+df =df.drop(df.iloc[reportEnd:].index)
