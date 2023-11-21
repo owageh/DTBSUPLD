@@ -15,3 +15,35 @@ def CalcObligorRating(rating):
 reportEnd = df[df.isna().all(axis=1)].index
 
 df =df.drop(df.iloc[reportEnd:].index)
+
+
+
+
+
+from datetime import datetime
+def date_std(source, report_name):
+    try:
+        if source == "Barclays":
+            report_date = report_name[:-5][-11:]
+            date_obj = datetime.strptime(report_date, '%d %b %Y')
+
+        elif source == "BMO":
+            report_date = report_name[0:10]
+            date_obj = datetime.strptime(report_date, '%Y.%m.%d')
+
+        elif source == "Scotiabank":
+            report_date = report_name[:-5][-8:]
+            date_obj = datetime.strptime(report_date, '%d.%m.%y')
+
+    except:
+        raise Exception(source +" Report name has no valid date!")
+
+    date_str = date_obj.strftime('%Y-%m-%d')
+    return date_str
+
+#print(date_std("Barclays", "abcde 16 Oct 2023.xlsx"))
+#print(date_std("BMO", "2022.05.31 abcde.xlsx"))
+print(date_std("Scotiabank", "3.3-1 07.10.23.xlsx"))
+#print(date_std("BMO", "2022.05 abcde.xlsx"))
+
+
